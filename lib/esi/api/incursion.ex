@@ -27,7 +27,7 @@ defmodule ESI.API.Incursion do
   - `operationId` -- `get_incursions`
   - `path` -- `/incursions/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Incursions/get_incursions)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Incursions/get_incursions)
 
   """
   @spec incursions() :: ESI.Request.t()

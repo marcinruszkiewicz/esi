@@ -1,5 +1,38 @@
 defmodule ESI.API.Industry do
   @doc """
+  Return cost indices for solar systems.
+
+  ## Response Example
+
+  A list of cost indicies:
+
+      [
+        %{
+          "cost_indices" => [%{"activity" => "invention", "cost_index" => 0.0048}],
+          "solar_system_id" => 30011392
+        }
+      ]
+
+  ## Swagger Source
+
+  This function was generated from the following Swagger operation:
+
+  - `operationId` -- `get_industry_systems`
+  - `path` -- `/industry/systems/`
+
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Industry/get_industry_systems)
+
+  """
+  @spec systems() :: ESI.Request.t()
+  def systems() do
+    %ESI.Request{
+      verb: :get,
+      path: "/industry/systems/",
+      opts_schema: %{datasource: {:query, :optional}}
+    }
+  end
+
+  @doc """
   Return a list of industry facilities.
 
   ## Response Example
@@ -24,7 +57,7 @@ defmodule ESI.API.Industry do
   - `operationId` -- `get_industry_facilities`
   - `path` -- `/industry/facilities/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Industry/get_industry_facilities)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Industry/get_industry_facilities)
 
   """
   @spec facilities() :: ESI.Request.t()
@@ -32,39 +65,6 @@ defmodule ESI.API.Industry do
     %ESI.Request{
       verb: :get,
       path: "/industry/facilities/",
-      opts_schema: %{datasource: {:query, :optional}}
-    }
-  end
-
-  @doc """
-  Return cost indices for solar systems.
-
-  ## Response Example
-
-  A list of cost indicies:
-
-      [
-        %{
-          "cost_indices" => [%{"activity" => "invention", "cost_index" => 0.0048}],
-          "solar_system_id" => 30011392
-        }
-      ]
-
-  ## Swagger Source
-
-  This function was generated from the following Swagger operation:
-
-  - `operationId` -- `get_industry_systems`
-  - `path` -- `/industry/systems/`
-
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Industry/get_industry_systems)
-
-  """
-  @spec systems() :: ESI.Request.t()
-  def systems() do
-    %ESI.Request{
-      verb: :get,
-      path: "/industry/systems/",
       opts_schema: %{datasource: {:query, :optional}}
     }
   end

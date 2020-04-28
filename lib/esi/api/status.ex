@@ -19,7 +19,7 @@ defmodule ESI.API.Status do
   - `operationId` -- `get_status`
   - `path` -- `/status/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Status/get_status)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Status/get_status)
 
   """
   @spec status() :: ESI.Request.t()

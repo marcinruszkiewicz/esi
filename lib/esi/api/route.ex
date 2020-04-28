@@ -28,7 +28,7 @@ defmodule ESI.API.Route do
   - `operationId` -- `get_route_origin_destination`
   - `path` -- `/route/{origin}/{destination}/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Routes/get_route_origin_destination)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Routes/get_route_origin_destination)
 
   """
   @spec route(origin :: integer, destination :: integer, opts :: route_opts) :: ESI.Request.t()

@@ -22,7 +22,7 @@ defmodule ESI.API.Search do
              | :solar_system
              | :station
            ]}
-          | {:language, nil | :de | :"en-us" | :fr | :ja | :ru | :zh}
+          | {:language, nil | :de | :"en-us" | :fr | :ja | :ru | :zh | :ko}
           | {:search, String.t()}
           | {:strict, nil | boolean}
 
@@ -46,7 +46,7 @@ defmodule ESI.API.Search do
   - `operationId` -- `get_search`
   - `path` -- `/search/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Search/get_search)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Search/get_search)
 
   """
   @spec search(opts :: search_opts) :: ESI.Request.t()

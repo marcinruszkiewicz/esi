@@ -1,38 +1,44 @@
 defmodule ESI.API.War do
-  @typedoc """
-  Options for [`War.wars/1`](#wars/1).
-
-  - `:max_war_id` -- Only return wars with ID smaller than this
-  """
-  @type wars_opts :: [wars_opt]
-  @type wars_opt :: {:max_war_id, nil | integer}
-
   @doc """
-  Return a list of wars.
+  Return details about a war.
 
   ## Response Example
 
-  A list of war IDs, in descending order by war_id:
+  Details about a war:
 
-      [3, 2, 1]
+      %{
+        "aggressor" => %{
+          "corporation_id" => 986665792,
+          "isk_destroyed" => 0,
+          "ships_killed" => 0
+        },
+        "declared" => "2004-05-22T05:20:00Z",
+        "defender" => %{
+          "corporation_id" => 1001562011,
+          "isk_destroyed" => 0,
+          "ships_killed" => 0
+        },
+        "id" => 1941,
+        "mutual" => false,
+        "open_for_allies" => false
+      }
 
   ## Swagger Source
 
   This function was generated from the following Swagger operation:
 
-  - `operationId` -- `get_wars`
-  - `path` -- `/wars/`
+  - `operationId` -- `get_wars_war_id`
+  - `path` -- `/wars/{war_id}/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Wars/get_wars)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Wars/get_wars_war_id)
 
   """
-  @spec wars(opts :: wars_opts) :: ESI.Request.t()
-  def wars(opts \\ []) do
+  @spec war(war_id :: integer) :: ESI.Request.t()
+  def war(war_id) do
     %ESI.Request{
       verb: :get,
-      path: "/wars/",
-      opts_schema: %{datasource: {:query, :optional}, max_war_id: {:query, :optional}},
-      opts: Map.new(opts)
+      path: "/wars/#{war_id}/",
+      opts_schema: %{datasource: {:query, :optional}}
     }
   end
 
@@ -69,7 +75,7 @@ defmodule ESI.API.War do
   - `operationId` -- `get_wars_war_id_killmails`
   - `path` -- `/wars/{war_id}/killmails/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Wars/get_wars_war_id_killmails)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Wars/get_wars_war_id_killmails)
 
   """
   @spec killmails(war_id :: integer, opts :: killmails_opts) :: ESI.Request.t()
@@ -82,46 +88,40 @@ defmodule ESI.API.War do
     }
   end
 
+  @typedoc """
+  Options for [`War.wars/1`](#wars/1).
+
+  - `:max_war_id` -- Only return wars with ID smaller than this
+  """
+  @type wars_opts :: [wars_opt]
+  @type wars_opt :: {:max_war_id, nil | integer}
+
   @doc """
-  Return details about a war.
+  Return a list of wars.
 
   ## Response Example
 
-  Details about a war:
+  A list of war IDs, in descending order by war_id:
 
-      %{
-        "aggressor" => %{
-          "corporation_id" => 986665792,
-          "isk_destroyed" => 0,
-          "ships_killed" => 0
-        },
-        "declared" => "2004-05-22T05:20:00Z",
-        "defender" => %{
-          "corporation_id" => 1001562011,
-          "isk_destroyed" => 0,
-          "ships_killed" => 0
-        },
-        "id" => 1941,
-        "mutual" => false,
-        "open_for_allies" => false
-      }
+      [3, 2, 1]
 
   ## Swagger Source
 
   This function was generated from the following Swagger operation:
 
-  - `operationId` -- `get_wars_war_id`
-  - `path` -- `/wars/{war_id}/`
+  - `operationId` -- `get_wars`
+  - `path` -- `/wars/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Wars/get_wars_war_id)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Wars/get_wars)
 
   """
-  @spec war(war_id :: integer) :: ESI.Request.t()
-  def war(war_id) do
+  @spec wars(opts :: wars_opts) :: ESI.Request.t()
+  def wars(opts \\ []) do
     %ESI.Request{
       verb: :get,
-      path: "/wars/#{war_id}/",
-      opts_schema: %{datasource: {:query, :optional}}
+      path: "/wars/",
+      opts_schema: %{datasource: {:query, :optional}, max_war_id: {:query, :optional}},
+      opts: Map.new(opts)
     }
   end
 end

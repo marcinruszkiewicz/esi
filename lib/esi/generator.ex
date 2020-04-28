@@ -97,7 +97,7 @@ defmodule ESI.Generator do
         "  - `operationId` -- `#{function.operation}`",
         "  - `path` -- `#{function.endpoint.source}`",
         "",
-        "  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/#{tag}/#{function.operation})",
+        "  [View on ESI Site](https://esi.evetech.net/latest/#!/#{tag}/#{function.operation})",
         "",
         ~S(  """)
       ]

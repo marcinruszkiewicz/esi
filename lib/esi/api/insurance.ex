@@ -5,7 +5,7 @@ defmodule ESI.API.Insurance do
   - `:language` (DEFAULT: `:"en-us"`) -- Language to use in the response, takes precedence over Accept-Language
   """
   @type prices_opts :: [prices_opt]
-  @type prices_opt :: {:language, nil | :de | :"en-us" | :fr | :ja | :ru | :zh}
+  @type prices_opt :: {:language, nil | :de | :"en-us" | :fr | :ja | :ru | :zh | :ko}
 
   @doc """
   Return available insurance levels for all ship types.
@@ -28,7 +28,7 @@ defmodule ESI.API.Insurance do
   - `operationId` -- `get_insurance_prices`
   - `path` -- `/insurance/prices/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Insurance/get_insurance_prices)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Insurance/get_insurance_prices)
 
   """
   @spec prices(opts :: prices_opts) :: ESI.Request.t()

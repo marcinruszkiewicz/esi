@@ -33,7 +33,7 @@ defmodule ESI.API.Loyalty do
   - `operationId` -- `get_loyalty_stores_corporation_id_offers`
   - `path` -- `/loyalty/stores/{corporation_id}/offers/`
 
-  [View on ESI Site](https://esi.tech.ccp.is/latest/#!/Loyalty/get_loyalty_stores_corporation_id_offers)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Loyalty/get_loyalty_stores_corporation_id_offers)
 
   """
   @spec offers(corporation_id :: integer) :: ESI.Request.t()
