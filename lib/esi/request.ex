@@ -110,8 +110,9 @@ defmodule ESI.Request do
             {:error, "HTTP 404"}
         end
 
-      {:ok, code, _, _} ->
-        {:error, "HTTP #{code}"}
+      {:ok, code, _, body} ->
+        {:ok, %{"error" => eve_error}} = Poison.decode(body)
+        {:error, "HTTP #{code}: #{eve_error}"}
 
       {:error, :timeout} ->
         {:error, "timeout"}
