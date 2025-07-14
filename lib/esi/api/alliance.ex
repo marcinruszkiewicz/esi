@@ -1,76 +1,28 @@
 defmodule ESI.API.Alliance do
-  @typedoc """
-  Options for [`Alliance.contacts/2`](#contacts/2).
-
-  - `:page` (DEFAULT: `1`) -- Which page of results to return
-  - `:token` -- Access token to use if unable to set a header
-  """
-  @type contacts_opts :: [contacts_opt]
-  @type contacts_opt :: {:page, nil | integer} | {:token, nil | String.t()}
-
   @doc """
-  Return contacts of an alliance.
+  List all current member corporations of an alliance.
 
   ## Response Example
 
-  A list of contacts:
+  List of corporation IDs:
 
-      [
-        %{
-          "contact_id" => 2112625428,
-          "contact_type" => "character",
-          "standing" => 9.9
-        }
-      ]
+      [98000001]
 
   ## Swagger Source
 
   This function was generated from the following Swagger operation:
 
-  - `operationId` -- `get_alliances_alliance_id_contacts`
-  - `path` -- `/alliances/{alliance_id}/contacts/`
+  - `operationId` -- `get_alliances_alliance_id_corporations`
+  - `path` -- `/alliances/{alliance_id}/corporations/`
 
-  [View on ESI Site](https://esi.evetech.net/latest/#!/Contacts/get_alliances_alliance_id_contacts)
-
-  """
-  @spec contacts(alliance_id :: integer, opts :: contacts_opts) :: ESI.Request.t()
-  def contacts(alliance_id, opts \\ []) do
-    %ESI.Request{
-      verb: :get,
-      path: "/alliances/#{alliance_id}/contacts/",
-      opts_schema: %{
-        datasource: {:query, :optional},
-        page: {:query, :optional},
-        token: {:query, :optional}
-      },
-      opts: Map.new(opts)
-    }
-  end
-
-  @doc """
-  List all active player alliances.
-
-  ## Response Example
-
-  List of Alliance IDs:
-
-      [99000001, 99000002]
-
-  ## Swagger Source
-
-  This function was generated from the following Swagger operation:
-
-  - `operationId` -- `get_alliances`
-  - `path` -- `/alliances/`
-
-  [View on ESI Site](https://esi.evetech.net/latest/#!/Alliance/get_alliances)
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Alliance/get_alliances_alliance_id_corporations)
 
   """
-  @spec alliances() :: ESI.Request.t()
-  def alliances() do
+  @spec corporations(alliance_id :: integer) :: ESI.Request.t()
+  def corporations(alliance_id) do
     %ESI.Request{
       verb: :get,
-      path: "/alliances/",
+      path: "/alliances/#{alliance_id}/corporations/",
       opts_schema: %{datasource: {:query, :optional}}
     }
   end
@@ -142,8 +94,84 @@ defmodule ESI.API.Alliance do
     %ESI.Request{
       verb: :get,
       path: "/alliances/#{alliance_id}/contacts/labels/",
-      opts_schema: %{datasource: {:query, :optional}, token: {:query, :optional}},
+      opts_schema: %{token: {:query, :optional}, datasource: {:query, :optional}},
       opts: Map.new(opts)
+    }
+  end
+
+  @typedoc """
+  Options for [`Alliance.contacts/2`](#contacts/2).
+
+  - `:page` (DEFAULT: `1`) -- Which page of results to return
+  - `:token` -- Access token to use if unable to set a header
+  """
+  @type contacts_opts :: [contacts_opt]
+  @type contacts_opt :: {:page, nil | integer} | {:token, nil | String.t()}
+
+  @doc """
+  Return contacts of an alliance.
+
+  ## Response Example
+
+  A list of contacts:
+
+      [
+        %{
+          "contact_id" => 2112625428,
+          "contact_type" => "character",
+          "standing" => 9.9
+        }
+      ]
+
+  ## Swagger Source
+
+  This function was generated from the following Swagger operation:
+
+  - `operationId` -- `get_alliances_alliance_id_contacts`
+  - `path` -- `/alliances/{alliance_id}/contacts/`
+
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Contacts/get_alliances_alliance_id_contacts)
+
+  """
+  @spec contacts(alliance_id :: integer, opts :: contacts_opts) :: ESI.Request.t()
+  def contacts(alliance_id, opts \\ []) do
+    %ESI.Request{
+      verb: :get,
+      path: "/alliances/#{alliance_id}/contacts/",
+      opts_schema: %{
+        token: {:query, :optional},
+        page: {:query, :optional},
+        datasource: {:query, :optional}
+      },
+      opts: Map.new(opts)
+    }
+  end
+
+  @doc """
+  List all active player alliances.
+
+  ## Response Example
+
+  List of Alliance IDs:
+
+      [99000001, 99000002]
+
+  ## Swagger Source
+
+  This function was generated from the following Swagger operation:
+
+  - `operationId` -- `get_alliances`
+  - `path` -- `/alliances/`
+
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Alliance/get_alliances)
+
+  """
+  @spec alliances() :: ESI.Request.t()
+  def alliances() do
+    %ESI.Request{
+      verb: :get,
+      path: "/alliances/",
+      opts_schema: %{datasource: {:query, :optional}}
     }
   end
 
@@ -155,8 +183,8 @@ defmodule ESI.API.Alliance do
   Icon URLs for the given alliance id and server:
 
       %{
-        "px128x128" => "https://images.evetech.net/Alliance/503818424_128.png",
-        "px64x64" => "https://images.evetech.net/Alliance/503818424_64.png"
+        "px128x128" => "https://images.evetech.net/alliances/503818424/logo?tenant=tranquility&size=128",
+        "px64x64" => "https://images.evetech.net/alliances/503818424/logo?tenant=tranquility&size=64"
       }
 
   ## Swagger Source
@@ -174,34 +202,6 @@ defmodule ESI.API.Alliance do
     %ESI.Request{
       verb: :get,
       path: "/alliances/#{alliance_id}/icons/",
-      opts_schema: %{datasource: {:query, :optional}}
-    }
-  end
-
-  @doc """
-  List all current member corporations of an alliance.
-
-  ## Response Example
-
-  List of corporation IDs:
-
-      [98000001]
-
-  ## Swagger Source
-
-  This function was generated from the following Swagger operation:
-
-  - `operationId` -- `get_alliances_alliance_id_corporations`
-  - `path` -- `/alliances/{alliance_id}/corporations/`
-
-  [View on ESI Site](https://esi.evetech.net/latest/#!/Alliance/get_alliances_alliance_id_corporations)
-
-  """
-  @spec corporations(alliance_id :: integer) :: ESI.Request.t()
-  def corporations(alliance_id) do
-    %ESI.Request{
-      verb: :get,
-      path: "/alliances/#{alliance_id}/corporations/",
       opts_schema: %{datasource: {:query, :optional}}
     }
   end

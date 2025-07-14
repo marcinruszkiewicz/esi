@@ -4,6 +4,6 @@ defmodule ESI.API do
   """
   @spec version :: String.t()
   def version do
-    "1.3.8"
+    "1.33"
   end
 end

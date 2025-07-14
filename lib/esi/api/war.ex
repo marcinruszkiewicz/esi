@@ -1,4 +1,41 @@
 defmodule ESI.API.War do
+  @typedoc """
+  Options for [`War.wars/1`](#wars/1).
+
+  - `:max_war_id` -- Only return wars with ID smaller than this
+  """
+  @type wars_opts :: [wars_opt]
+  @type wars_opt :: {:max_war_id, nil | integer}
+
+  @doc """
+  Return a list of wars.
+
+  ## Response Example
+
+  A list of war IDs, in descending order by war_id:
+
+      [3, 2, 1]
+
+  ## Swagger Source
+
+  This function was generated from the following Swagger operation:
+
+  - `operationId` -- `get_wars`
+  - `path` -- `/wars/`
+
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Wars/get_wars)
+
+  """
+  @spec wars(opts :: wars_opts) :: ESI.Request.t()
+  def wars(opts \\ []) do
+    %ESI.Request{
+      verb: :get,
+      path: "/wars/",
+      opts_schema: %{datasource: {:query, :optional}, max_war_id: {:query, :optional}},
+      opts: Map.new(opts)
+    }
+  end
+
   @doc """
   Return details about a war.
 
@@ -83,44 +120,7 @@ defmodule ESI.API.War do
     %ESI.Request{
       verb: :get,
       path: "/wars/#{war_id}/killmails/",
-      opts_schema: %{datasource: {:query, :optional}, page: {:query, :optional}},
-      opts: Map.new(opts)
-    }
-  end
-
-  @typedoc """
-  Options for [`War.wars/1`](#wars/1).
-
-  - `:max_war_id` -- Only return wars with ID smaller than this
-  """
-  @type wars_opts :: [wars_opt]
-  @type wars_opt :: {:max_war_id, nil | integer}
-
-  @doc """
-  Return a list of wars.
-
-  ## Response Example
-
-  A list of war IDs, in descending order by war_id:
-
-      [3, 2, 1]
-
-  ## Swagger Source
-
-  This function was generated from the following Swagger operation:
-
-  - `operationId` -- `get_wars`
-  - `path` -- `/wars/`
-
-  [View on ESI Site](https://esi.evetech.net/latest/#!/Wars/get_wars)
-
-  """
-  @spec wars(opts :: wars_opts) :: ESI.Request.t()
-  def wars(opts \\ []) do
-    %ESI.Request{
-      verb: :get,
-      path: "/wars/",
-      opts_schema: %{datasource: {:query, :optional}, max_war_id: {:query, :optional}},
+      opts_schema: %{page: {:query, :optional}, datasource: {:query, :optional}},
       opts: Map.new(opts)
     }
   end

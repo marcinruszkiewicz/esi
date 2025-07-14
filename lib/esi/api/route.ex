@@ -37,10 +37,10 @@ defmodule ESI.API.Route do
       verb: :get,
       path: "/route/#{origin}/#{destination}/",
       opts_schema: %{
-        avoid: {:query, :optional},
-        connections: {:query, :optional},
+        flag: {:query, :optional},
         datasource: {:query, :optional},
-        flag: {:query, :optional}
+        avoid: {:query, :optional},
+        connections: {:query, :optional}
       },
       opts: Map.new(opts)
     }

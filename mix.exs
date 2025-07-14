@@ -1,7 +1,7 @@
 defmodule ESI.Mixfile do
   use Mix.Project
 
-  @version "0.2.1"
+  @version "0.3.0"
 
   def project do
     [
@@ -10,8 +10,8 @@ defmodule ESI.Mixfile do
       elixir: "~> 1.4",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      source_url: "https://github.com/bruce/esi",
-      homepage_url: "https://github.com/bruce/esi",
+      source_url: "https://github.com/marcinruszkiewicz/esi",
+      homepage_url: "https://github.com/marcinruszkiewicz/esi",
       description: description(),
       deps: deps(),
       docs: docs(),
@@ -55,9 +55,9 @@ defmodule ESI.Mixfile do
   defp package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
-      maintainers: ["Bruce Williams", "Brian O'Grady"],
+      maintainers: ["Bruce Williams", "Brian O'Grady", "Marcin Ruszkiewicz"],
       licenses: ["MIT"],
-      links: %{GitHub: "https://github.com/bruce/esi"}
+      links: %{GitHub: "https://github.com/marcinruszkiewicz/esi"}
     ]
   end
 end

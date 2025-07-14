@@ -1,43 +1,5 @@
 defmodule ESI.API.Sovereignty do
   @doc """
-  Shows sovereignty data for structures..
-
-  ## Response Example
-
-  A list of sovereignty structures:
-
-      [
-        %{
-          "alliance_id" => 498125261,
-          "solar_system_id" => 30000570,
-          "structure_id" => 1018253388776,
-          "structure_type_id" => 32226,
-          "vulnerability_occupancy_level" => 2,
-          "vulnerable_end_time" => "2016-10-29T05:30:00Z",
-          "vulnerable_start_time" => "2016-10-28T20:30:00Z"
-        }
-      ]
-
-  ## Swagger Source
-
-  This function was generated from the following Swagger operation:
-
-  - `operationId` -- `get_sovereignty_structures`
-  - `path` -- `/sovereignty/structures/`
-
-  [View on ESI Site](https://esi.evetech.net/latest/#!/Sovereignty/get_sovereignty_structures)
-
-  """
-  @spec structures() :: ESI.Request.t()
-  def structures() do
-    %ESI.Request{
-      verb: :get,
-      path: "/sovereignty/structures/",
-      opts_schema: %{datasource: {:query, :optional}}
-    }
-  end
-
-  @doc """
   Shows sovereignty data for campaigns..
 
   ## Response Example
@@ -101,6 +63,44 @@ defmodule ESI.API.Sovereignty do
     %ESI.Request{
       verb: :get,
       path: "/sovereignty/map/",
+      opts_schema: %{datasource: {:query, :optional}}
+    }
+  end
+
+  @doc """
+  Shows sovereignty data for structures..
+
+  ## Response Example
+
+  A list of sovereignty structures:
+
+      [
+        %{
+          "alliance_id" => 498125261,
+          "solar_system_id" => 30000570,
+          "structure_id" => 1018253388776,
+          "structure_type_id" => 32226,
+          "vulnerability_occupancy_level" => 2,
+          "vulnerable_end_time" => "2016-10-29T05:30:00Z",
+          "vulnerable_start_time" => "2016-10-28T20:30:00Z"
+        }
+      ]
+
+  ## Swagger Source
+
+  This function was generated from the following Swagger operation:
+
+  - `operationId` -- `get_sovereignty_structures`
+  - `path` -- `/sovereignty/structures/`
+
+  [View on ESI Site](https://esi.evetech.net/latest/#!/Sovereignty/get_sovereignty_structures)
+
+  """
+  @spec structures() :: ESI.Request.t()
+  def structures() do
+    %ESI.Request{
+      verb: :get,
+      path: "/sovereignty/structures/",
       opts_schema: %{datasource: {:query, :optional}}
     }
   end

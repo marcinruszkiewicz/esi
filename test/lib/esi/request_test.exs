@@ -89,7 +89,7 @@ defmodule ESI.RequestTest do
     end
 
     test "missing more than one required option" do
-      assert {:error, "missing options `:foo`, `:baz`"} = ESI.Request.validate(@request)
+      assert {:error, "missing options `:baz`, `:foo`"} = ESI.Request.validate(@request)
     end
 
     test "providing a superfluous option" do

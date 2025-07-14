@@ -110,9 +110,7 @@ defmodule ESI.Generator do
 
     [
       ~S(  @typedoc """),
-      "  Options for [`#{function.module_name}.#{function.name}/#{arity}`](##{function.name}/#{
-        arity
-      }).",
+      "  Options for [`#{function.module_name}.#{function.name}/#{arity}`](##{function.name}/#{arity}).",
       "",
       Enum.map(opts_params(function), fn param ->
         "  - `:#{param["name"]}` #{param_req_tag(param)}-- #{param["description"]}"

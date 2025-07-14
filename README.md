@@ -4,11 +4,11 @@ An Elixir client for Eve Online's Swagger Interface (ESI).
 
 ## Installation
 
-Install from [Hex.pm](https://hex.pm/packages/esi):
+Install from this github repo, as the Hex.pm package is severely outdated:
 
 ```elixir
 def deps do
-  [{:esi, "~> 0.1"}]
+  [{:esi, git: "https://github.com/marcinruszkiewicz/esi.git"}]
 end
 ```
 
@@ -26,7 +26,7 @@ You can see what version of the ESI Swagger Specification was used by running:
 
 ``` elixir
 ESI.API.version()
-# => "0.7.5"
+# => "1.33"
 ```
 
 API functions are available in modules under `ESI.API`. The module grouping is close to,
