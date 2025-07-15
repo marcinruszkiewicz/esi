@@ -59,6 +59,20 @@ defmodule ESI.Request do
   end
 
   @doc """
+  Run a request.
+  """
+  @spec run_with_headers(t) :: {:ok, any} | {:error, any}
+  def run_with_headers(request) do
+    case validate(request) do
+      :ok ->
+        do_run_with_headers(request)
+
+      other ->
+        other
+    end
+  end
+
+  @doc """
   Validate that the request is ready.
   """
   @spec validate(request :: t) :: :ok | {:error, String.t()}
@@ -119,6 +133,39 @@ defmodule ESI.Request do
     end
   end
 
+  defp do_run_with_headers(request) do
+    encoded_opts = encode_options(request)
+    url = @base <> request.path <> encoded_opts.query
+
+    case :hackney.request(request.verb, url, [], encoded_opts.body, [
+           :with_body,
+           follow_redirect: true,
+           recv_timout: 30_000
+         ]) do
+      {:ok, code, headers, body} when code in 200..299 ->
+        {:ok, data} = Poison.decode(body)
+        {_key, max_pages} = headers |> Enum.find(fn {key, value} -> String.downcase(key) == "x-pages" end)
+
+        {:ok, data, String.to_integer(max_pages)}
+
+      {:ok, 404, _, body} ->
+        case Poison.decode(body) do
+          {:ok, %{"error" => eve_error}} ->
+            {:error, eve_error}
+
+          _ ->
+            {:error, "HTTP 404"}
+        end
+
+      {:ok, code, _, body} ->
+        {:ok, %{"error" => eve_error}} = Poison.decode(body)
+        {:error, "HTTP #{code}: #{eve_error}"}
+
+      {:error, :timeout} ->
+        {:error, "timeout"}
+    end
+  end
+
   @spec opts_by_location(request :: t) :: %{(:body | :query) => %{atom => any}}
   def opts_by_location(request) do
     Enum.reduce(request.opts, %{body: %{}, query: %{}}, fn {key, value}, acc ->
@@ -152,7 +199,7 @@ defmodule ESI.Request do
   def stream!(%{opts_schema: %{page: _}} = request) do
     request_fun = fn page ->
       options(request, page: page)
-      |> run
+      |> run_with_headers
     end
 
     first_page = Map.get(request.opts, :page, 1)
@@ -165,13 +212,18 @@ defmodule ESI.Request do
 
         {fun, page} ->
           case fun.(page) do
-            {:ok, []} ->
+            {:ok, [], _max_pages} ->
               {[], :quit}
 
-            {:ok, data} when is_list(data) ->
-              {data, {fun, page + 1}}
+            {:ok, data, max_pages} when is_list(data) ->
+              next_page = page + 1
+              if next_page > max_pages do
+                {data, :quit}
+              else
+                {data, {fun, next_page}}
+              end
 
-            {:ok, data} ->
+            {:ok, data, _max_pages} ->
               {[data], :quit}
 
             {:error, err} ->

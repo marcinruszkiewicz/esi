@@ -7,7 +7,7 @@ defmodule ESI do
   - `request` -- the request
   - `opts` -- any additional options to set on the request
   """
-  @spec request!(req :: ESI.Request.t(), opts :: ESI.Request.request_opts()) ::
+  @spec request(req :: ESI.Request.t(), opts :: ESI.Request.request_opts()) ::
           {:ok, any} | {:error, any}
   def request(req, opts \\ []) do
     req
@@ -21,6 +21,36 @@ defmodule ESI do
   @spec request!(req :: ESI.Request.t(), opts :: ESI.Request.request_opts()) :: any
   def request!(req, opts \\ []) do
     case request(req, opts) do
+      {:ok, result} ->
+        result
+
+      {:error, err} ->
+        raise "Request failed: #{err}"
+    end
+  end
+
+  @doc """
+  Execute a request.
+
+  ## Arguments
+
+  - `request` -- the request
+  - `opts` -- any additional options to set on the request
+  """
+  @spec request_with_headers(req :: ESI.Request.t(), opts :: ESI.Request.request_opts()) ::
+          {:ok, any} | {:error, any}
+  def request_with_headers(req, opts \\ []) do
+    req
+    |> ESI.Request.options(opts)
+    |> ESI.Request.run_with_headers()
+  end
+
+  @doc """
+  Execute a request and raise an error if it is not successful.
+  """
+  @spec request_with_headers!(req :: ESI.Request.t(), opts :: ESI.Request.request_opts()) :: any
+  def request_with_headers!(req, opts \\ []) do
+    case request_with_headers(req, opts) do
       {:ok, result} ->
         result
 
